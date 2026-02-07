@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="https://em-content.zobj.net/source/apple/81/heavy-black-heart_2764.png">
+    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <title>Je t'aime</title>
+
+    <style>
+        body {
+            background: #FBEAF6;
+            font-family: 'Zalando Sans SemiExpanded', cursive;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grossebox {
+            width: 75%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            background-color: #F2BFCC;
+            border: 2px solid black;
+        }
+
+        h1 {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .emojy {
+            width: 38px;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .container-boutons {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+            height: 60px;
+            position: relative; /* Important pour le positionnement */
+        }
+
+        /* TAILLE FIXE STRICTE */
+        .btn-fixe {
+            width: 150px; 
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #FFF;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+        }
+
+        /* MODALE */
+        .overlay-modale {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contenu-modale {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 85%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+        }
+
+        .btn-fermer {
+            background-color: #FFF; 
+            border: 1px solid #ccc;
+            padding: 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grossebox">
+        <h1> 
+            <img src="https://em-content.zobj.net/source/apple/419/growing-heart_1f497.png" class="emojy"> 
+            Veux tu être ma valentine ? 
+            <img src="https://em-content.zobj.net/source/apple/419/growing-heart_1f497.png" class="emojy">
+        </h1>
+
+        <div class="container-boutons">
+            <button onclick="ouvrirModale()" class="btn-fixe">
+                OUI
+                <img src="https://em-content.zobj.net/source/apple/81/heavy-black-heart_2764.png" style="width: 1.5em; margin-left: 8px;">
+            </button>
+
+            <button id="btn-non" class="btn-fixe">
+                non 
+                <img src="https://em-content.zobj.net/source/apple/419/broken-heart_1f494.png" style="width: 1.5em; margin-left: 8px;">
+            </button>
+        </div>
+    </div>
+
+    <div id="fenetre" class="overlay-modale">
+        <div class="contenu-modale">
+            <img src="https://em-content.zobj.net/source/apple/81/heavy-black-heart_2764.png" style="width: 60px; margin-bottom: 10px;">
+            <p style="color: #666; font-size: 18px; font-weight: bold;">
+                Parfait prépare toi, on va au restaurant demain! 
+            </p>
+            <img src="https://media.giphy.com/media/LbC9yf16pIS74lXTDc/giphy.gif" style="width: 50%; border-radius: 10px; margin-top: 10px;">
+            <button class="btn-fermer" onclick="fermerModale()">Fermer</button>
+        </div>
+    </div>
+
+    <script>
+        const boutonNon = document.getElementById('btn-non');
+        const maModale = document.getElementById('fenetre');
+
+        function ouvrirModale() { maModale.style.display = "flex"; }
+        function fermerModale() { maModale.style.display = "none"; }
+
+        setTimeout(() => {
+            // Pour empêcher le OUI de bouger, on fixe les dimensions du conteneur
+            // au moment où le bouton NON s'en va.
+            setInterval(() => {
+                const x = Math.random() * (window.innerWidth - 150);
+                const y = Math.random() * (window.innerHeight - 50);
+
+                // On applique le mouvement
+                boutonNon.style.position = 'fixed';
+                boutonNon.style.left = x + 'px';
+                boutonNon.style.top = y + 'px';
+                boutonNon.style.zIndex = "1000";
+                boutonNon.style.transition = 'all 0.3s ease';
+                
+                // On s'assure que la taille ne change jamais
+                boutonNon.style.width = '150px';
+                boutonNon.style.height = '50px';
+            }, 800);
+        }, 800); 
+    </script>
+</body>
+</html>
